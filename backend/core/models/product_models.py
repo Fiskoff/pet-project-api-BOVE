@@ -22,7 +22,7 @@ class Product(BaseModel):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     full_name: Mapped[str] = mapped_column(String(256))
     article: Mapped[str | None] = mapped_column(String(256), nullable=True)
-    image: Mapped[str] = mapped_column(Text)
+    price: Mapped[decimal.Decimal] = mapped_column(Numeric)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     composition_material: Mapped[str] = mapped_column(Text)
     category_id: Mapped[int] = mapped_column(Integer, ForeignKey('product_categories.id'))
@@ -39,7 +39,8 @@ class ProductVariant(BaseModel):
     color: Mapped[str] = mapped_column(String(256))
     size: Mapped[SizeEnum] = mapped_column(Enum(SizeEnum, name='size_enum'))
     quantity: Mapped[int] = mapped_column(Integer)
-    price: Mapped[decimal.Decimal] = mapped_column(Numeric)
+    image: Mapped[str] = mapped_column(Text)
+    price_variant: Mapped[decimal.Decimal | None] = mapped_column(Numeric, nullable=True)
 
     product = relationship("Product", back_populates="variants")
 
