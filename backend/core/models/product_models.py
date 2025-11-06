@@ -15,6 +15,9 @@ class ProductCategory(BaseModel):
 
     products = relationship("Product", back_populates="category", cascade="all, delete-orphan")
 
+    def __str__(self):
+        return f"Категория: {self.name}"
+
 
 class Product(BaseModel):
     __tablename__ = 'products'
@@ -30,6 +33,9 @@ class Product(BaseModel):
     category = relationship("ProductCategory", back_populates="products")
     variants = relationship("ProductVariant", back_populates="product", cascade="all, delete-orphan")
 
+    def __str__(self):
+        return f"Товар: {self.full_name}"
+
 
 class ProductVariant(BaseModel):
     __tablename__ = 'product_variants'
@@ -43,4 +49,7 @@ class ProductVariant(BaseModel):
     price_variant: Mapped[decimal.Decimal | None] = mapped_column(Numeric, nullable=True)
 
     product = relationship("Product", back_populates="variants")
+
+    def __repr__(self):
+        return f"Вариант ID: {self.id}"
 

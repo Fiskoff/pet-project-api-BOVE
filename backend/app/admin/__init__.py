@@ -1,4 +1,8 @@
-from app.admin.devices_admin_model import DevicesAdmin
+from app.admin.product_admin_models import ProductAdmin, ProductCategoryAdmin, ProductVariantAdmin
 
 
-admin_views = [DevicesAdmin]
+admin_views = [
+    ProductAdmin,
+    ProductCategoryAdmin,
+    ProductVariantAdmin
+]
