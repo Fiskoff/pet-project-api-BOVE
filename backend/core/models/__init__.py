@@ -4,3 +4,4 @@ from core.models.product_models import(
     ProductCategory,
     ProductVariant,
 )
+from core.models.emun_models import SizeEnum
