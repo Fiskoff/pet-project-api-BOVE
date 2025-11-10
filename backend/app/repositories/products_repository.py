@@ -32,8 +32,13 @@ class ProductRepository:
 
 
     @staticmethod
-    async def get_variants_by_product_id(product_id: int) -> list[ProductVariant]:
+    async def get_variants_by_product_id(product_id: int) -> list[ProductVariant] | None:
         async with db_helper.session_factory() as session:
+            chek_stmt = await session.execute(select(Product).where(Product.id == product_id))
+            chek_product = chek_stmt.scalar_one_or_none()
+            if chek_product is None:
+                return None
+
             result = await session.execute (
                 select(ProductVariant)
                 .where(ProductVariant.product_id == product_id)
