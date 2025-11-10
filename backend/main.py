@@ -41,4 +41,5 @@ main_app = create_application()
 
 
 if __name__ == '__main__':
+    print("Start FastAPI application")
     run("main:main_app", host=settings.run.host, port=settings.run.port)
