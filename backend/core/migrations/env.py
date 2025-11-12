@@ -23,7 +23,7 @@ from alembic import context
 from core.config import settings
 from core.models import (
     BaseModel,
-    Product, ProductCategory, ProductVariant
+    Product, ProductCategory, ProductVariant, PromoCode
 )
 
 
