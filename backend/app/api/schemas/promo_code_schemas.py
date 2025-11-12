@@ -8,4 +8,4 @@ class PromoCodeSchema(BaseModel):
 
 
 class GetDiscountResponse(BaseModel):
-    discount: decimal.Decimal = Field(..., description="Скидка", examples=[15])
+    discount: decimal.Decimal = Field(..., description="Процент на который осуществляется скидка", examples=[15])
