@@ -14,3 +14,7 @@ from app.api.schemas.categories_schemas import (
     GetCategoriesResponse,
     GetCategoryByIdResponse
 )
+from app.api.schemas.promo_code_schemas import (
+    PromoCodeSchema,
+    GetDiscountResponse
+)
