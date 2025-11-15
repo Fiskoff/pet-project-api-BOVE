@@ -57,6 +57,8 @@ class ProductAdmin(ModelView, model=Product):
         Product.full_name,
         Product.article,
         Product.price,
+        Product.new,
+        Product.popular,
         Product.description,
 
         Product.category,
@@ -76,6 +78,8 @@ class ProductAdmin(ModelView, model=Product):
         Product.full_name,
         Product.article,
         Product.price,
+        Product.new,
+        Product.popular,
     ]
 
     column_default_sort = [(Product.id, True)]
@@ -90,6 +94,8 @@ class ProductAdmin(ModelView, model=Product):
         Product.full_name: "Название",
         Product.article: "Артикул",
         Product.price: "Цена",
+        Product.new: "Новинка",
+        Product.popular: "Популярный товар",
         Product.description: "Описание товара",
         Product.composition_material: "Материал",
         Product.category_id: "Категория",
@@ -102,6 +108,8 @@ class ProductAdmin(ModelView, model=Product):
         Product.full_name,
         Product.article,
         Product.price,
+        Product.new,
+        Product.popular,
         Product.description,
         Product.composition_material,
         Product.category,
@@ -117,6 +125,12 @@ class ProductAdmin(ModelView, model=Product):
         },
         "price": {
             "label": "Цена",
+        },
+        "new": {
+            "label": "Новинка",
+        },
+        "popular" : {
+            "label": "Популярный товар",
         },
         "description": {
             "label": "Описание товара",
@@ -148,7 +162,6 @@ class ProductVariantAdmin(ModelView, model=ProductVariant):
         ProductVariant.color,
         ProductVariant.size,
         ProductVariant.quantity,
-        ProductVariant.image,
         ProductVariant.price_variant,
 
         ProductVariant.product
@@ -179,6 +192,7 @@ class ProductVariantAdmin(ModelView, model=ProductVariant):
     column_labels = {
         ProductVariant.id: "ID",
         ProductVariant.color: "Цвет",
+        ProductVariant.hex_color: "hex код",
         ProductVariant.size: "Размер",
         ProductVariant.quantity: "Количество",
         ProductVariant.image: "Изображение",
@@ -189,6 +203,7 @@ class ProductVariantAdmin(ModelView, model=ProductVariant):
 
     form_columns = [
         ProductVariant.color,
+        ProductVariant.hex_color,
         ProductVariant.size,
         ProductVariant.quantity,
         ProductVariant.image,
@@ -199,6 +214,9 @@ class ProductVariantAdmin(ModelView, model=ProductVariant):
     form_args = {
         "color": {
             "label": "Цвет товара",
+        },
+        "hex_color": {
+            "label": "hex код",
         },
         "size": {
             "label": "Размер товара",

@@ -1,6 +1,6 @@
 import decimal
 
-from sqlalchemy import Integer, String, Text, ForeignKey, Numeric, Enum
+from sqlalchemy import Integer, String, Text, ForeignKey, Numeric, Enum, Boolean
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 from core.models.base_model import BaseModel
@@ -26,6 +26,8 @@ class Product(BaseModel):
     full_name: Mapped[str] = mapped_column(String(256))
     article: Mapped[str | None] = mapped_column(String(256), nullable=True)
     price: Mapped[decimal.Decimal] = mapped_column(Numeric)
+    new: Mapped[bool |  None] = mapped_column(Boolean)
+    popular: Mapped[bool |  None] = mapped_column(Boolean)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     composition_material: Mapped[str] = mapped_column(Text)
     category_id: Mapped[int] = mapped_column(Integer, ForeignKey('product_categories.id'))
@@ -43,6 +45,7 @@ class ProductVariant(BaseModel):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     product_id: Mapped[int] = mapped_column(Integer, ForeignKey('products.id'))
     color: Mapped[str] = mapped_column(String(256))
+    hex_color: Mapped[str | None] = mapped_column(String(256))
     size: Mapped[SizeEnum] = mapped_column(Enum(SizeEnum, name='size_enum'))
     quantity: Mapped[int] = mapped_column(Integer)
     image: Mapped[str] = mapped_column(Text)

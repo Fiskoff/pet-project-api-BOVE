@@ -9,6 +9,7 @@ from core.models import SizeEnum
 class ProductVariantSchema(BaseModel):
     id: int = Field(..., description="Уникальный идентификатор варианта продукта", examples=[19])
     color: str = Field(..., description="Цвет варианта продукта", examples=["чёрный"], max_length=256)
+    hex_color: str = Field(..., description="hex код", examples=["#000000"], max_length=256)
     size: SizeEnum = Field(..., description="Размер варианта продукта", examples=["One Size"])
     quantity: int = Field(..., description="Количество на складе", examples=[15], ge=0)
     image: str = Field(..., description="Путь к изображению варианта", examples=["path/to/image.jpg"], max_length=16777215)
