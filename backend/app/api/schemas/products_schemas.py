@@ -32,3 +32,7 @@ class GetProductsResponse(BaseModel):
 
 class GetProductByIdResponse(BaseModel):
     product: ProductByIdSchema = Field(..., description="Конкретный товар и его варианты")
+
+
+class GetProductsWithVariantsResponse(BaseModel):
+    products: List[ProductByIdSchema] = Field(..., description="Конкретные товары и их варианты")

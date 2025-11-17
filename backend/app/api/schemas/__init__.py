@@ -6,7 +6,8 @@ from app.api.schemas.products_schemas import (
     ProductSchema,
     ProductByIdSchema,
     GetProductsResponse,
-    GetProductByIdResponse
+    GetProductByIdResponse,
+    GetProductsWithVariantsResponse
 )
 from app.api.schemas.categories_schemas import (
     ProductCategorySchema,
