@@ -1,6 +1,7 @@
 import logging
 
 from fastapi import FastAPI, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import run
 from sqladmin import Admin
 
@@ -29,6 +30,14 @@ def create_application() -> FastAPI:
     app.include_router(router)
     for router in routers:
         app.include_router(router)
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],  # Разрешённые домены - все
+        allow_credentials=False,  # True только при указанном разрешённом домене
+        allow_methods=["*"],  # Разрешить все методы
+        allow_headers=["*"],  # Разрешить все заголовки
+    )
 
     admin = Admin(app, db_helper.engine)
     for view in admin_views:
