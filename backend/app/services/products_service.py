@@ -32,3 +32,19 @@ class ProductService:
             logger.warning(f"GET /products/{product_id}/variants - status_code : 404")
             raise HTTPException(status_code=404, detail="Такого товара не существует")
         return variants
+
+    @staticmethod
+    async def get_new_products():
+        new_products = await ProductRepository.get_new_products()
+        if not new_products:
+            logger.warning(f"GET /products/new - status_code : 404")
+            raise HTTPException(status_code=404, detail="Новые товары отсутствуют")
+        return new_products
+
+    @staticmethod
+    async def get_popular_products():
+        popular_products = await ProductRepository.get_popular_products()
+        if not popular_products:
+            logger.warning(f"GET /products/popular - status_code : 404")
+            raise HTTPException(status_code=404, detail="Популярные товары отсутствуют")
+        return popular_products

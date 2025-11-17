@@ -4,7 +4,9 @@ from fastapi import APIRouter, HTTPException
 from starlette import status
 
 from app.services import ProductCategoryService, ProductService
-from app.api.schemas import GetCategoriesResponse, GetCategoryByIdResponse, GetProductsResponse, GetProductByIdResponse, GetProductVariantsResponse
+from app.api.schemas import (
+    GetCategoriesResponse, GetCategoryByIdResponse, GetProductsResponse, GetProductByIdResponse, GetProductVariantsResponse, GetProductsWithVariantsResponse
+)
 
 
 logger = logging.getLogger(__name__)
@@ -45,7 +47,7 @@ async def get_category(category_id: int) -> GetCategoryByIdResponse:
         )
 
 
-@router.get("", summary="Получить все продукты")
+@router.get("", summary="Получить все товары")
 async def get_products() -> GetProductsResponse:
     logger.info(f"GET /products")
     try:
@@ -61,7 +63,43 @@ async def get_products() -> GetProductsResponse:
         )
 
 
-@router.get("/{product_id}", summary="Получить конкретный продукт и его варианты")
+@router.get("/new", summary="Получить все новые товары")
+async def get_new_products() -> GetProductsWithVariantsResponse:
+    logger.info(f"GET /products/new")
+    try:
+        new_products = await ProductService.get_new_products()
+        logger.info(f"GET /products/new - status_code : 200")
+        return GetProductsWithVariantsResponse(products=new_products)
+    except HTTPException:
+        raise
+    except Exception as error:
+        logger.error(f"GET /products/new - status_code : 500")
+        logger.error(f"Error : {str(error)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Внутренняя ошибка сервера при получении новых товаров"
+        )
+
+
+@router.get("/popular", summary="Получить все популярные товары")
+async def get_popular_products() -> GetProductsWithVariantsResponse:
+    logger.info(f"GET /products/popular")
+    try:
+        popular_products = await ProductService.get_popular_products()
+        logger.info(f"GET /products/popular - status_code : 200")
+        return GetProductsWithVariantsResponse(products=popular_products)
+    except HTTPException:
+        raise
+    except Exception as error:
+        logger.error(f"GET /products/popular - status_code : 500")
+        logger.error(f"Error : {str(error)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Внутренняя ошибка сервера при получении популярных товаров"
+        )
+
+
+@router.get("/{product_id}", summary="Получить конкретный товар и его варианты")
 async def get_product(product_id: int) -> GetProductByIdResponse:
     logger.info(f"GET /{product_id}")
     try:
@@ -79,7 +117,7 @@ async def get_product(product_id: int) -> GetProductByIdResponse:
         )
 
 
-@router.get("/{product_id}/variants", summary="Получить только варианты конкретного продукта")
+@router.get("/{product_id}/variants", summary="Получить только варианты конкретного товара")
 async def get_product_variants(product_id: int) -> GetProductVariantsResponse:
     logger.info(f"GET /{product_id}/variants")
     try:

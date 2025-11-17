@@ -45,3 +45,25 @@ class ProductRepository:
             )
             variants = result.scalars().all()
             return variants
+
+    @staticmethod
+    async def get_new_products() -> list[Product]:
+        async with db_helper.session_factory() as session:
+            result = await session.execute(
+                select(Product)
+                .options(selectinload(Product.variants))
+                .where(Product.new == True)
+            )
+            products = result.scalars().all()
+            return products
+
+    @staticmethod
+    async def get_popular_products() -> list[Product]:
+        async with db_helper.session_factory() as session:
+            result = await session.execute(
+                select(Product)
+                .options(selectinload(Product.variants))
+                .where(Product.popular == True)
+            )
+            products = result.scalars().all()
+            return products
