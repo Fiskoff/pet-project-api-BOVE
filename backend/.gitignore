@@ -23,7 +23,4 @@ __pycache__/
 # Local development files
 *.sqlite
 *.db
-/core/migrations/script.py.mako
 
-pgadmin_data/
-postgres_data/
