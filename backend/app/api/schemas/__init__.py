@@ -1,13 +1,15 @@
 from app.api.schemas.variants_schemas import (
     ProductVariantSchema,
-    GetProductVariantsResponse
+    GetProductVariantsResponse,
+    ColorVariantSchema
 )
 from app.api.schemas.products_schemas import (
     ProductSchema,
     ProductByIdSchema,
     GetProductsResponse,
     GetProductByIdResponse,
-    GetProductsWithVariantsResponse
+    GetProductsWithVariantsResponse,
+    GetProductsColorsResponse
 )
 from app.api.schemas.categories_schemas import (
     ProductCategorySchema,

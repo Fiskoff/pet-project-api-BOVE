@@ -3,8 +3,8 @@ import logging
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
-from backend.core.models import ProductCategory
-from backend.core.db_helper import db_helper
+from core.models import ProductCategory
+from core.db_helper import db_helper
 
 
 logger = logging.getLogger(__name__)

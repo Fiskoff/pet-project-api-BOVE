@@ -24,3 +24,6 @@ __pycache__/
 *.sqlite
 *.db
 /core/migrations/script.py.mako
+
+pgadmin_data/
+postgres_data/

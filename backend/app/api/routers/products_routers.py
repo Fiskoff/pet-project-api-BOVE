@@ -5,7 +5,8 @@ from starlette import status
 
 from app.services import ProductCategoryService, ProductService
 from app.api.schemas import (
-    GetCategoriesResponse, GetCategoryByIdResponse, GetProductsResponse, GetProductByIdResponse, GetProductVariantsResponse, GetProductsWithVariantsResponse
+    GetCategoriesResponse, GetCategoryByIdResponse, GetProductsResponse, GetProductByIdResponse,
+    GetProductVariantsResponse, GetProductsWithVariantsResponse, GetProductsColorsResponse
 )
 
 
@@ -56,6 +57,22 @@ async def get_products() -> GetProductsResponse:
         return GetProductsResponse(products=products)
     except Exception as error:
         logger.error(f"GET /products - status_code : 500")
+        logger.error(f"Error : {str(error)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Внутренняя ошибка сервера при получении товаров"
+        )
+
+
+@router.get("/colors", summary="Получить все товары")
+async def get_products() -> GetProductsColorsResponse:
+    logger.info(f"GET /products/colors")
+    try:
+        products = await ProductService.get_all_with_colors()
+        logger.info(f"GET /products/colors - status_code : 200")
+        return GetProductsColorsResponse(products=products)
+    except Exception as error:
+        logger.error(f"GET /products/colors - status_code : 500")
         logger.error(f"Error : {str(error)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

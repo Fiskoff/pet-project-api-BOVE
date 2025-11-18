@@ -2,6 +2,7 @@ import logging
 
 from fastapi import HTTPException
 
+from app.api.schemas.products_schemas import ProductsColors
 from app.repositories.products_repository import ProductRepository
 from core.models import Product, ProductVariant
 
@@ -48,3 +49,12 @@ class ProductService:
             logger.warning(f"GET /products/popular - status_code : 404")
             raise HTTPException(status_code=404, detail="Популярные товары отсутствуют")
         return popular_products
+
+    @staticmethod
+    async def get_all_with_colors():
+        products_sqlalchemy = await ProductRepository.get_all_with_colors()
+        products_schemas = []
+        for product_db in products_sqlalchemy:
+            product_schema = ProductsColors.model_validate(product_db)
+            products_schemas.append(product_schema)
+        return products_schemas

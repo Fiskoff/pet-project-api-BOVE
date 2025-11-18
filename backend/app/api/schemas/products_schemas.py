@@ -3,7 +3,7 @@ from typing import List
 
 from pydantic import BaseModel, Field, ConfigDict
 
-from app.api.schemas import ProductVariantSchema
+from app.api.schemas import ProductVariantSchema, ColorVariantSchema
 
 
 class ProductSchema(BaseModel):
@@ -36,3 +36,15 @@ class GetProductByIdResponse(BaseModel):
 
 class GetProductsWithVariantsResponse(BaseModel):
     products: List[ProductByIdSchema] = Field(..., description="Конкретные товары и их варианты")
+
+
+class ProductsColors(BaseModel):
+    id: int = Field(..., description="Уникальный идентификатор продукта", examples=[36])
+    full_name: str = Field(..., description="Полное наименование товара", examples=["Жилетка"], max_length=256)
+    variants: List[ColorVariantSchema] = Field(default_factory=list, description="Список цветов и hex-кодов")
+
+    model_config = ConfigDict(from_attributes=True, str_strip_whitespace=True)
+
+
+class GetProductsColorsResponse(BaseModel):
+    products: List[ProductsColors] = Field(..., description="Список всех товаров с цветами и hex-кодами")

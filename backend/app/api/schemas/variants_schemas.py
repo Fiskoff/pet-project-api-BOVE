@@ -21,3 +21,10 @@ class ProductVariantSchema(BaseModel):
 
 class GetProductVariantsResponse(BaseModel):
     variants: List[ProductVariantSchema] = Field(..., description="Список вариантов конкретного продукта")
+
+
+class ColorVariantSchema(BaseModel):
+    color: str = Field(..., description="Цвет варианта продукта", examples=["чёрный"], max_length=256)
+    hex_color: str = Field(..., description="hex код", examples=["#000000"], max_length=256)
+
+    model_config = ConfigDict(from_attributes=True, str_strip_whitespace=True)

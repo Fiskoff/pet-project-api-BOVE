@@ -3,8 +3,8 @@ import logging
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
-from backend.core.models import Product, ProductVariant
-from backend.core.db_helper import db_helper
+from core.models import Product, ProductVariant
+from core.db_helper import db_helper
 
 
 logger = logging.getLogger(__name__)
@@ -64,6 +64,16 @@ class ProductRepository:
                 select(Product)
                 .options(selectinload(Product.variants))
                 .where(Product.popular == True)
+            )
+            products = result.scalars().all()
+            return products
+
+    @staticmethod
+    async def get_all_with_colors():
+        async with db_helper.session_factory() as session:
+            result = await session.execute(
+                select(Product)
+                .options(selectinload(Product.variants))
             )
             products = result.scalars().all()
             return products

@@ -2,11 +2,11 @@ import logging
 
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from uvicorn import run
 from sqladmin import Admin
 
 from app.admin import admin_views
 from app.api.routers import routers
+from app.auth.admin_auth import authentication_backend
 from core.config import settings
 from core.db_helper import db_helper
 
@@ -39,16 +39,11 @@ def create_application() -> FastAPI:
         allow_headers=["*"],  # Разрешить все заголовки
     )
 
-    admin = Admin(app, db_helper.engine)
+    admin = Admin(app, db_helper.engine, authentication_backend=authentication_backend)
     for view in admin_views:
         admin.add_view(view)
 
     return app
 
 
-main_app = create_application()
-
-
-if __name__ == '__main__':
-    print("Start FastAPI application")
-    run("main:main_app", host=settings.run.host, port=settings.run.port)
+app = create_application()
